@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.shuidun.book.BusDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="${poImport}" id="BaseResultMap">
+        <result property="location" column="location"/>
+        <result property="price" column="price"/>
+        <result property="nseat" column="nSeat"/>
+        <result property="seatavail" column="seatAvail"/>
+    </resultMap>
+
+    <!--
+          选择性插入
+        -->
+    <sql id="Base_Insert_Selective">
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="location != null">
+                location,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="nseat != null">
+                nSeat,
+            </if>
+            <if test="seatavail != null">
+                seatAvail
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="location != null">
+                #{location,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="nseat != null">
+                #{nseat,jdbcType=DECIMAL},
+            </if>
+            <if test="seatavail != null">
+                #{seatavail,jdbcType=DECIMAL}
+            </if>
+        </trim>
+    </sql>
+
+    <!--
+      数据库表的基本查询列名集合
+    -->
+    <sql id="Base_Column_List">
+        location, price, nSeat, seatAvail
+    </sql>
+
+    <!--
+        Where子句
+      -->
+    <sql id="Base_Query_Where">
+        <if test="location != null">
+            and location = #{location,jdbcType=VARCHAR}
+        </if>
+        <if test="price != null">
+            and price = #{price,jdbcType=DECIMAL}
+        </if>
+        <if test="nseat != null">
+            and nSeat = #{nseat,jdbcType=DECIMAL}
+        </if>
+        <if test="seatavail != null">
+            and seatAvail = #{seatavail,jdbcType=DECIMAL}
+        </if>
+    </sql>
+
+    <!--
+        基本更新字段
+    -->
+    <sql id="Base_Update_Column">
+        <set>
+            <if test="location != null">
+                location = #{location,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                price = #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="nseat != null">
+                nSeat = #{nseat,jdbcType=DECIMAL},
+            </if>
+            <if test="seatavail != null">
+                seatAvail = #{seatavail,jdbcType=DECIMAL}
+            </if>
+        </set>
+    </sql>
+
+    <!--
+        分页查询数据库表
+      -->
+    <select id="selectPaged" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from bus
+    </select>
+
+    <!--
+      根据主键查询数据库表
+    -->
+    <select id="selectByPrimaryKey" parameterType="${pk.attrTypePath}" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from bus
+        where location = #{location,jdbcType=VARCHAR}
+    </select>
+
+
+    <!--
+      根据主键删除数据库表中的记录
+    -->
+    <delete id="deleteByPrimaryKey" parameterType="${pk.attrTypePath}">
+        delete FROM bus
+        where location = #{location,jdbcType=VARCHAR}
+    </delete>
+
+    <!--
+      添加一条记录到数据库表中
+    -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"
+            parameterType="${poImport}">
+        insert into bus
+        (<include refid="Base_Column_List"/>)
+        values (
+        <if test="location != null">
+            #{location,jdbcType=VARCHAR},
+        </if>
+        <if test="price != null">
+            #{price,jdbcType=DECIMAL},
+        </if>
+        <if test="nseat != null">
+            #{nseat,jdbcType=DECIMAL},
+        </if>
+        <if test="seatavail != null">
+            #{seatavail,jdbcType=DECIMAL}
+        </if>
+        )
+    </insert>
+
+    <!--
+     有选择的添加一条记录到数据库表中
+   -->
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id"
+            parameterType="${poImport}">
+        insert into bus
+        <include refid="Base_Insert_Selective"/>
+    </insert>
+
+    <!--
+      有选择的可忽略添加一条记录到数据库表中
+    -->
+    <insert id="insertSelectiveIgnore" useGeneratedKeys="true" keyProperty="id"
+            parameterType="${poImport}">
+        insert ignore into bus
+        <include refid="Base_Insert_Selective"/>
+    </insert>
+
+    <!--
+      根据主键有选择的更新数据库表
+    -->
+    <update id="updateByPrimaryKeySelective" parameterType="${poImport}">
+        update bus
+        <include refid="Base_Update_Column"></include>
+        where location = #{location,jdbcType=VARCHAR}
+    </update>
+
+
+    <!--
+      根据主键更新数据库表
+    -->
+    <update id="updateByPrimaryKey" parameterType="${poImport}">
+        update bus
+        <set>
+            <if test="location != null">
+                location = #{location,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                price = #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="nseat != null">
+                nSeat = #{nseat,jdbcType=DECIMAL},
+            </if>
+            <if test="seatavail != null">
+                seatAvail = #{seatavail,jdbcType=DECIMAL}
+            </if>
+        </set>
+        where location = #{location,jdbcType=VARCHAR}
+    </update>
+
+    <!--
+      批量添加记录到数据库表中
+    -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        insert into bus
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            location, price, nSeat, seatAvail
+        </trim>
+        values
+        <foreach collection="list" index="index" item="item" separator=",">
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                #{item.location,jdbcType=VARCHAR}, #{item.price,jdbcType=DECIMAL}, #{item.nseat,jdbcType=DECIMAL},
+                #{item.seatavail,jdbcType=DECIMAL}
+            </trim>
+        </foreach>
+    </insert>
+
+    <!--
+      根据主键批量更新数据库表中的记录
+    -->
+    <update id="batchUpdate" parameterType="java.util.List">
+        <foreach collection="list" index="index" item="item" separator=";">
+            update bus
+            <set>
+                <trim suffixOverrides=",">
+                    <if test="item.location != null">
+                        location = #{item.location,jdbcType=VARCHAR},
+                    </if>
+                    <if test="item.price != null">
+                        price = #{item.price,jdbcType=DECIMAL},
+                    </if>
+                    <if test="item.nseat != null">
+                        nSeat = #{item.nseat,jdbcType=DECIMAL},
+                    </if>
+                    <if test="item.seatavail != null">
+                        seatAvail = #{item.seatavail,jdbcType=DECIMAL}
+                    </if>
+                </trim>
+            </set>
+            <where>
+                <trim suffixOverrides=",">
+                    where location = #{item.location,jdbcType=VARCHAR}
+                </trim>
+            </where>
+        </foreach>
+    </update>
+
+    <!--
+     使用给定的字段名定义Where子句
+   -->
+    <sql id="Identifiers_Array_Conditions">
+        <foreach collection="array" index="index" item="item" separator=" and ">
+            <if test="item == 'location'">
+                location = #{location,jdbcType=VARCHAR}
+            </if>
+            <if test="item == 'price'">
+                price = #{price,jdbcType=DECIMAL}
+            </if>
+            <if test="item == 'nseat'">
+                nSeat = #{nseat,jdbcType=DECIMAL}
+            </if>
+            <if test="item == 'seatavail'">
+                seatAvail = #{seatavail,jdbcType=DECIMAL}
+            </if>
+        </foreach>
+    </sql>
+
+    <!--
+      存在即更新否则插入
+    -->
+    <update id="upsert" parameterType="${poImport}">
+        insert into bus
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            location, price, nSeat, seatAvail
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            #{location,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{nseat,jdbcType=DECIMAL},
+            #{seatavail,jdbcType=DECIMAL}
+        </trim>
+        on duplicate key update
+        <trim suffixOverrides=",">
+            #{location,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{nseat,jdbcType=DECIMAL},
+            #{seatavail,jdbcType=DECIMAL}
+        </trim>
+    </update>
+
+
+    <!--
+      带有空值检查的存在即更新否则插入
+    -->
+    <update id="upsertSelective" parameterType="${poImport}">
+        insert into bus
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="location !=null ">
+                location,
+            </if>
+            <if test="price !=null ">
+                price,
+            </if>
+            <if test="nseat !=null ">
+                nSeat,
+            </if>
+            <if test="seatavail !=null ">
+                seatAvail
+            </if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="location !=null ">
+                location = #{location,jdbcType=VARCHAR},
+            </if>
+            <if test="price !=null ">
+                price = #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="nseat !=null ">
+                nSeat = #{nseat,jdbcType=DECIMAL},
+            </if>
+            <if test="seatavail !=null ">
+                seatAvail = #{seatavail,jdbcType=DECIMAL}
+            </if>
+        </trim>
+        on duplicate key update
+        <trim suffixOverrides=",">
+            <if test="location !=null ">
+                location = #{location,jdbcType=VARCHAR},
+            </if>
+            <if test="price !=null ">
+                price = #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="nseat !=null ">
+                nSeat = #{nseat,jdbcType=DECIMAL},
+            </if>
+            <if test="seatavail !=null ">
+                seatAvail = #{seatavail,jdbcType=DECIMAL}
+            </if>
+        </trim>
+    </update>
+
+    <select id="query" resultMap="BaseResultMap" parameterType="${poImport}">
+        select
+        <include refid="Base_Column_List"/>
+        from bus
+        <where>
+            <include refid="Base_Query_Where"></include>
+        </where>
+    </select>
+
+    <select id="queryTotal" resultType="long">
+        select count(*) from bus
+    </select>
+
+
+    <delete id="deleteBatch">
+        delete from bus where location in
+        <foreach item="location" collection="list" open="(" separator="," close=")">
+            #{location}
+        </foreach>
+    </delete>
+
+</mapper>
