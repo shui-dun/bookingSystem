@@ -2,6 +2,9 @@ package com.shuidun.book.bean;
 
 
 public class Reservehotel {
+    public Reservehotel() {
+    }
+
     public Reservehotel(String customerId, String hotelId) {
         this.customerId = customerId;
         this.hotelId = hotelId;

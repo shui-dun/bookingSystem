@@ -2,6 +2,9 @@ package com.shuidun.book.bean;
 
 
 public class Hotels {
+    public Hotels() {
+    }
+
     public Hotels(String location, long price, long nRoom, long roomAvail) {
         this.location = location;
         this.price = price;
@@ -50,4 +53,11 @@ public class Hotels {
         this.roomAvail = roomAvail;
     }
 
+    @Override
+    public String toString() {
+        return "位置='" + location + '\'' +
+                ", 价格=" + price +
+                ", 房间数=" + nRoom +
+                ", 剩余房间数=" + roomAvail;
+    }
 }

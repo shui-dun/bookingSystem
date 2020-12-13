@@ -2,6 +2,10 @@ package com.shuidun.book.bean;
 
 
 public class Customers {
+    public Customers() {
+
+    }
+
     public Customers(String id, String name) {
         this.id = id;
         this.name = name;

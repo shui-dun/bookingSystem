@@ -2,6 +2,9 @@ package com.shuidun.book.bean;
 
 
 public class Reserveflight {
+    public Reserveflight() {
+    }
+
     public Reserveflight(String customerId, String flightId) {
         this.customerId = customerId;
         this.flightId = flightId;

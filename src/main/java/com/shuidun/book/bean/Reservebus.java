@@ -2,6 +2,9 @@ package com.shuidun.book.bean;
 
 
 public class Reservebus {
+    public Reservebus() {
+    }
+
     public Reservebus(String customerId, String busId) {
         this.customerId = customerId;
         this.busId = busId;

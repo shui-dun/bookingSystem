@@ -11,7 +11,7 @@ public class DBConnector {
 
     public static Connection getConnection() {
         Connection connection = null;
-        try (InputStream in = DBConnector.class.getResourceAsStream("../../../config.properties")) {
+        try (InputStream in = DBConnector.class.getResourceAsStream("../../../../config.properties")) {
             Properties properties = new Properties();
             properties.load(in);
             String url = properties.getProperty("dbUrl");

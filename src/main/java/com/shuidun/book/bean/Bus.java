@@ -2,6 +2,9 @@ package com.shuidun.book.bean;
 
 
 public class Bus {
+    public Bus() {
+    }
+
     public Bus(String location, long price, long nSeat, long seatAvail) {
         this.location = location;
         this.price = price;
@@ -50,4 +53,11 @@ public class Bus {
         this.seatAvail = seatAvail;
     }
 
+    @Override
+    public String toString() {
+        return "位于='" + location + '\'' +
+                ", 价格=" + price +
+                ", 座位数目=" + nSeat +
+                ", 空闲座位=" + seatAvail;
+    }
 }

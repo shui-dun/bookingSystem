@@ -7,16 +7,15 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class ReservebusDao {
-    public static boolean reverse(Reservebus reservebus) {
+    public static boolean reverse(Connection conn, Reservebus reservebus) {
         int affectedRow = -1;
-        try (Connection conn = DBConnector.getConnection();
-             PreparedStatement ps = conn.prepareStatement("insert into reservebus values (?,?);")) {
+        try (PreparedStatement ps = conn.prepareStatement("insert into reservebus values (?,?);")) {
             ps.setString(1, reservebus.getCustomerId());
             ps.setString(2, reservebus.getBusId());
             affectedRow = ps.executeUpdate();
         } catch (SQLException throwables) {
             System.out.println("预订失败：" + throwables.getMessage());
         }
-        return affectedRow == 1;
+        return affectedRow > 0;
     }
 }
