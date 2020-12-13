@@ -32,4 +32,11 @@ public class Customers {
         this.name = name;
     }
 
+    @Override
+    public String toString() {
+        return "客户{" +
+                "id='" + id + '\'' +
+                ", 姓名='" + name + '\'' +
+                '}';
+    }
 }

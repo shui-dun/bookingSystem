@@ -23,6 +23,10 @@ public class Update {
             }
             long seatOccupied = origin.getNSeat() - origin.getSeatAvail();
             bus.setSeatAvail(bus.getNSeat() - seatOccupied);
+            if (bus.getSeatAvail() < 0) {
+                System.out.println("新的座位数小于预订人数，更新失败");
+                return;
+            }
             if (BusDao.update(conn, bus)) {
                 System.out.println("更新成功");
                 conn.commit();
@@ -59,6 +63,10 @@ public class Update {
             }
             long seatOccupied = origin.getNSeat() - origin.getSeatAvail();
             flight.setSeatAvail(flight.getNSeat() - seatOccupied);
+            if (flight.getSeatAvail() < 0) {
+                System.out.println("新的座位数小于预订人数，更新失败");
+                return;
+            }
             if (FlightsDao.update(conn, flight)) {
                 System.out.println("更新成功");
                 conn.commit();
@@ -83,6 +91,10 @@ public class Update {
             }
             long roomOccupied = origin.getNRoom() - origin.getRoomAvail();
             hotel.setRoomAvail(hotel.getNRoom() - roomOccupied);
+            if (hotel.getRoomAvail() < 0) {
+                System.out.println("新的房间数小于预订人数，更新失败");
+                return;
+            }
             if (HotelsDao.update(conn, hotel)) {
                 System.out.println("更新成功");
                 conn.commit();

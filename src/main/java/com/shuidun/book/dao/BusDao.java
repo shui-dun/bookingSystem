@@ -42,14 +42,16 @@ public class BusDao {
 
     public static Bus find(Connection conn, String location) {
         Bus bus = null;
-        try (PreparedStatement ps = conn.prepareStatement("select * from bus where location=?;");
-             ResultSet rs = ps.executeQuery()
+        try (PreparedStatement ps = conn.prepareStatement("select * from bus where location=?;")
         ) {
-            List<Bus> list = new BeanProcessor().toBeanList(rs, Bus.class);
-            if (list == null || list.size() == 0) {
-                return null;
-            } else {
-                bus = list.get(0);
+            ps.setString(1, location);
+            try (ResultSet rs = ps.executeQuery()){
+                List<Bus> list = new BeanProcessor().toBeanList(rs, Bus.class);
+                if (list == null || list.size() == 0) {
+                    return null;
+                } else {
+                    bus = list.get(0);
+                }
             }
         } catch (SQLException throwables) {
             System.out.println("查询出错：" + throwables.getMessage());

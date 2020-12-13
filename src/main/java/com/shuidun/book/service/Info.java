@@ -5,7 +5,6 @@ import com.shuidun.book.dao.*;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.*;
 
 public class Info {
@@ -25,7 +24,7 @@ public class Info {
         try (Connection conn = DBConnector.getConnection()) {
             System.out.printf("开往%s的航班如下：\n", travelTo.getName());
             List<Flights> flights = FlightsDao.toCity(conn, travelTo);
-            if (flights == null) {
+            if (flights == null || flights.size() == 0) {
                 System.out.println("未找到相关航班");
             } else {
                 for (Flights flight : flights) {
@@ -52,6 +51,7 @@ public class Info {
     }
 
     public static void route(Customers customer) {
+        System.out.println(customer);
         List<Flights> flights = null;
         List<Bus> buses = null;
         List<Hotels> hotels = null;
@@ -95,15 +95,21 @@ public class Info {
         Collections.sort(head);
         for (TravelNode node : alone) {
             System.out.println(node);
+            System.out.println();
         }
         for (int i = 0; i < head.size(); i++) {
             TravelNode h = head.get(i);
             TravelNode node = h;
-            for (; node.to != null; node = map.get(node.to.getToCity())) {
+            for (; ; node = map.get(node.to.getToCity())) {
                 System.out.println(node);
+                if (node.to == null){
+                    break;
+                }else {
+                    System.out.println("    *");
+                }
             }
             if (i != head.size() - 1) {
-                System.out.printf("* 你可能需要预订从%s到%s的航班\n", node.city, head.get(i + 1).city);
+                System.out.printf("\n* 你可能需要预订从%s到%s的航班\n\n", node.city, head.get(i + 1).city);
             }
         }
     }
@@ -146,9 +152,9 @@ public class Info {
             else
                 sb.append("    你没有预订大巴，是否要预订大巴？\n");
             if (hotel != null)
-                sb.append("    预定了宾馆：").append(hotel).append('\n');
+                sb.append("    预定了宾馆：").append(hotel);
             else
-                sb.append("    你没有预订宾馆，是否要预订宾馆？\n");
+                sb.append("    你没有预订宾馆，是否要预订宾馆？");
             return sb.toString();
         }
     }

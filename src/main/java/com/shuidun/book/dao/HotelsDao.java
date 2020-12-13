@@ -44,6 +44,7 @@ public class HotelsDao {
         Hotels hotel = null;
         try (PreparedStatement ps = conn.prepareStatement("select * from hotels where location=?;")
         ) {
+            ps.setString(1, location);
             try (ResultSet rs = ps.executeQuery()) {
                 List<Hotels> list = new BeanProcessor().toBeanList(rs, Hotels.class);
                 if (list == null || list.size() == 0) {

@@ -9,12 +9,11 @@ import com.shuidun.book.service.Update;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Scanner;
 
 public class Main {
     private static Scanner input = new Scanner(System.in);
-    private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd.HH:mm");
     private static String choice;
     private static City city = new City();
     private static Flights flight = new Flights();
@@ -41,41 +40,41 @@ public class Main {
         System.out.println("3:查看信息");
         System.out.println("    3.1:查看所有城市信息");
         System.out.println("    3.2:查看去往某个城市航班、大巴、宾馆信息");
-        System.out.println("    3.3:查看用户旅游路线");
+        System.out.println("    3.3:查看用户信息及旅游路线");
         System.out.println("4:预订服务");
         System.out.println("    4.1:预订大巴");
         System.out.println("    4.2:预订酒店");
         System.out.println("    4.3:预订航班");
-        System.out.println("请选择要执行的操作：");
+        System.out.println("q:退出");
     }
 
     public static void inputCity() {
         System.out.print("城市名：");
-        city.setName(input.nextLine());
+        city.setName(input.next());
     }
 
     public static boolean inputFlight() {
         System.out.print("ID：");
-        flight.setId(input.nextLine());
+        flight.setId(input.next());
         System.out.print("价格：");
         flight.setPrice(input.nextLong());
         System.out.print("座位数：");
         flight.setNSeat(input.nextLong());
         flight.setSeatAvail(flight.getNSeat());
         System.out.print("来自城市：");
-        flight.setFromCity(input.nextLine());
+        flight.setFromCity(input.next());
         System.out.print("开往城市：");
-        flight.setToCity(input.nextLine());
-        System.out.print("起飞时间（形如yyyy-MM-dd HH:mm）：");
+        flight.setToCity(input.next());
+        System.out.print("起飞时间（形如yyyy-MM-dd.HH:mm）：");
         try {
-            flight.setFromTime(new Timestamp(sdf.parse(input.nextLine()).getTime()));
+            flight.setFromTime(new Timestamp(sdf.parse(input.next()).getTime()));
         } catch (ParseException e) {
             System.out.println("格式错误");
             return false;
         }
-        System.out.print("到达时间（形如yyyy-MM-dd HH:mm）：");
+        System.out.print("到达时间（形如yyyy-MM-dd.HH:mm）：");
         try {
-            flight.setFromTime(new Timestamp(sdf.parse(input.nextLine()).getTime()));
+            flight.setToTime(new Timestamp(sdf.parse(input.next()).getTime()));
         } catch (ParseException e) {
             System.out.println("格式错误");
             return false;
@@ -85,7 +84,7 @@ public class Main {
 
     public static void inputBus() {
         System.out.print("位于：");
-        bus.setLocation(input.nextLine());
+        bus.setLocation(input.next());
         System.out.print("价格：");
         bus.setPrice(input.nextLong());
         System.out.print("座位数：");
@@ -95,7 +94,7 @@ public class Main {
 
     public static void inputHotel() {
         System.out.print("位于：");
-        hotel.setLocation(input.nextLine());
+        hotel.setLocation(input.next());
         System.out.print("价格：");
         hotel.setPrice(input.nextLong());
         System.out.print("房间数：");
@@ -105,37 +104,36 @@ public class Main {
 
     public static void inputCustomer() {
         System.out.print("ID：");
-        customer.setId(input.nextLine());
+        customer.setId(input.next());
         System.out.print("姓名：");
-        customer.setName(input.nextLine());
+        customer.setName(input.next());
     }
 
     public static void inputReservebus() {
         System.out.print("大巴位于：");
-        bus.setLocation(input.nextLine());
+        reservebus.setBusId(input.next());
         System.out.print("用户ID：");
-        customer.setId(input.nextLine());
+        reservebus.setCustomerId(input.next());
     }
 
     public static void inputReserveHotel() {
         System.out.print("用户ID：");
-        customer.setId(input.nextLine());
+        reservehotel.setCustomerId(input.next());
         System.out.print("宾馆位于：");
-        hotel.setLocation(input.nextLine());
+        reservehotel.setHotelId(input.next());
     }
 
     public static void inputReserveFlight() {
         System.out.print("用户ID：");
-        customer.setId(input.nextLine());
+        reserveflight.setCustomerId(input.next());
         System.out.print("航班ID：");
-        flight.setId(input.nextLine());
+        reserveflight.setFlightId(input.next());
     }
 
     public static void main(String[] args) {
-
         while (true) {
             showInfo();
-            choice = input.nextLine();
+            choice = input.next();
             switch (choice) {
                 case "1.1":
                     inputCity();
@@ -204,6 +202,10 @@ public class Main {
                     inputReserveFlight();
                     Reserve.reverseFlight(reserveflight);
                     break;
+                case "q":
+                    return;
+                default:
+                    System.out.println("请输入有效命令");
             }
         }
     }
