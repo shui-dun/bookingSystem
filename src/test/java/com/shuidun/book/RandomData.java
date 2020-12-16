@@ -15,6 +15,9 @@ import java.util.Locale;
 import java.util.Random;
 import java.util.TreeSet;
 
+/**
+ * 生成随机数据
+ */
 public class RandomData {
     private Random random = new Random(0);
 

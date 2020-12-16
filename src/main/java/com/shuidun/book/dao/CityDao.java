@@ -12,6 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CityDao {
+
+    /**
+     * 添加一个城市
+     */
     public static boolean add(Connection conn, City city) {
         int affectedRow = -1;
         try (PreparedStatement ps = conn.prepareStatement("insert into city values (?);")) {
@@ -23,6 +27,9 @@ public class CityDao {
         return affectedRow > 0;
     }
 
+    /**
+     * 查找所有城市
+     */
     public static List<City> findAll(Connection conn) {
         List<City> list = null;
         try (PreparedStatement ps = conn.prepareStatement("select * from city;")) {

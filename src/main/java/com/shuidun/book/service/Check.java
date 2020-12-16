@@ -4,7 +4,14 @@ import com.shuidun.book.bean.Bus;
 import com.shuidun.book.bean.Flights;
 import com.shuidun.book.bean.Hotels;
 
+
+/**
+ * 检查bean对象的合法性
+ */
 public class Check {
+    /**
+     * 检查航班合法性
+     */
     public static boolean checkFlight(Flights flight) {
         if (flight.getPrice() <= 0) {
             System.out.println("航班价格必须为正数");
@@ -25,6 +32,9 @@ public class Check {
         return true;
     }
 
+    /**
+     * 检查大巴合法性
+     */
     public static boolean checkBus(Bus bus) {
         if (bus.getPrice() <= 0) {
             System.out.println("大巴价格必须为正数");
@@ -37,6 +47,9 @@ public class Check {
         return true;
     }
 
+    /**
+     * 检查宾馆合法性
+     */
     public static boolean checkHotel(Hotels hotel) {
         if (hotel.getPrice() <= 0) {
             System.out.println("宾馆价格必须为正数");

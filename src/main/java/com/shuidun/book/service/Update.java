@@ -9,7 +9,14 @@ import com.shuidun.book.dao.*;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+/**
+ * 更新数据库数据
+ */
 public class Update {
+
+    /**
+     * 更新大巴信息
+     */
     public static void updateBus(Bus bus) {
         if (!Check.checkBus(bus)) {
             return;
@@ -38,6 +45,9 @@ public class Update {
         }
     }
 
+    /**
+     * 更新用户信息
+     */
     public static void updateCustomers(Customers customer) {
         try (Connection conn = DBConnector.getConnection()) {
             if (CustomersDao.update(conn, customer)) {
@@ -50,6 +60,9 @@ public class Update {
         }
     }
 
+    /**
+     * 更新航班信息
+     */
     public static void updateFlights(Flights flight) {
         if (!Check.checkFlight(flight)) {
             return;
@@ -78,6 +91,9 @@ public class Update {
         }
     }
 
+    /**
+     * 更新宾馆信息
+     */
     public static void updateHotels(Hotels hotel) {
         if (!Check.checkHotel(hotel)) {
             return;

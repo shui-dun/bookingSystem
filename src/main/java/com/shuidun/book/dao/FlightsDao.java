@@ -14,6 +14,9 @@ import java.util.List;
 
 public class FlightsDao {
 
+    /**
+     * 添加一个航班
+     */
     public static boolean add(Connection conn, Flights flight) {
         int affectedRow = -1;
         try (PreparedStatement ps = conn.prepareStatement("insert into flights values (?,?,?,?,?,?,?,?);")) {
@@ -32,7 +35,9 @@ public class FlightsDao {
         return affectedRow > 0;
     }
 
-
+    /**
+     * 更新航班信息
+     */
     public static boolean update(Connection conn, Flights flight) {
         try (PreparedStatement ps = conn.prepareStatement("update flights set price=?,nSeat=?,seatAvail=?,fromCity=?,toCity=?,fromTime=?,toTime=? where id=?;")) {
             ps.setLong(1, flight.getPrice());
@@ -50,6 +55,9 @@ public class FlightsDao {
         return true;
     }
 
+    /**
+     * 查找去往某个城市的所有航班
+     */
     public static List<Flights> toCity(Connection conn, City city) {
         List<Flights> list = null;
         try (PreparedStatement ps = conn.prepareStatement("select * from flights where toCity=?;")
@@ -64,6 +72,9 @@ public class FlightsDao {
         return list;
     }
 
+    /**
+     * 根据航班号查找航班
+     */
     public static Flights find(Connection conn, String id) {
         Flights flight = null;
         try (PreparedStatement ps = conn.prepareStatement("select * from flights where id=?;")) {
@@ -82,6 +93,9 @@ public class FlightsDao {
         return flight;
     }
 
+    /**
+     * 查找某个用户预定的所有航班
+     */
     public static List<Flights> reservedBy(Connection conn, String customer) {
         List<Flights> list = null;
         try (PreparedStatement ps = conn.prepareStatement("select f.* from reserveFlight r join flights f on f.id = r.flightId where r.customerId=?;")) {

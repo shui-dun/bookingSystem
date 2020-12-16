@@ -11,6 +11,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
 
+/**
+ * 主类
+ */
 public class Main {
     private static Scanner input = new Scanner(System.in);
     private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd.HH:mm");
@@ -24,6 +27,9 @@ public class Main {
     private static Reserveflight reserveflight = new Reserveflight();
     private static Reservehotel reservehotel = new Reservehotel();
 
+    /**
+     * 展示给用户的提示信息
+     */
     public static void showInfo() {
         System.out.println("欢迎进入订票管理系统，请选择操作：");
         System.out.println("1:添加信息");

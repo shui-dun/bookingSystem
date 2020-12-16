@@ -6,7 +6,14 @@ import com.shuidun.book.dao.*;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+/**
+ * 向数据库中添加实体
+ */
 public class Add {
+
+    /**
+     * 添加城市
+     */
     public static void addCity(City city) {
         try (Connection conn = DBConnector.getConnection()) {
             if (CityDao.add(conn, city)) {
@@ -17,6 +24,9 @@ public class Add {
         }
     }
 
+    /**
+     * 添加航班
+     */
     public static void addFlight(Flights flight) {
         if (!Check.checkFlight(flight)) {
             return;
@@ -31,6 +41,9 @@ public class Add {
         }
     }
 
+    /**
+     * 添加一个大巴
+     */
     public static void addBus(Bus bus) {
         if (!Check.checkBus(bus)) {
             return;
@@ -45,6 +58,9 @@ public class Add {
         }
     }
 
+    /**
+     * 添加一个宾馆
+     */
     public static void addHotel(Hotels hotel) {
         if (!Check.checkHotel(hotel)) {
             return;
@@ -59,6 +75,9 @@ public class Add {
         }
     }
 
+    /**
+     * 添加一个用户
+     */
     public static void addCustomer(Customers customer) {
         try (Connection conn = DBConnector.getConnection()) {
             if (CustomersDao.add(conn, customer)) {

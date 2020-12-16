@@ -12,6 +12,10 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class BusDao {
+
+    /**
+     * 添加大巴
+     */
     public static boolean add(Connection conn, Bus bus) {
         int affectedRow = -1;
         try (PreparedStatement ps = conn.prepareStatement("insert into bus values (?,?,?,?);")) {
@@ -26,6 +30,9 @@ public class BusDao {
         return affectedRow > 0;
     }
 
+    /**
+     * 根据主键更新大巴
+     */
     public static boolean update(Connection conn, Bus bus) {
         int affectedRow = -1;
         try (PreparedStatement ps = conn.prepareStatement("update bus set price=?,nSeat=?,seatAvail=? where location=?;")) {
@@ -40,6 +47,9 @@ public class BusDao {
         return affectedRow > 0;
     }
 
+    /**
+     * 根据主键查找大巴
+     */
     public static Bus find(Connection conn, String location) {
         Bus bus = null;
         try (PreparedStatement ps = conn.prepareStatement("select * from bus where location=?;")
@@ -59,6 +69,11 @@ public class BusDao {
         return bus;
     }
 
+    /**
+     * 查找用户预订的所有大巴
+     * @param customer 将要查找的用户
+     * @return 该用户预订的所有大巴
+     */
     public static List<Bus> reservedBy(Connection conn, String customer) {
         List<Bus> list = null;
         try (PreparedStatement ps = conn.prepareStatement("select b.* from reservebus r join bus b on b.location = r.busId where r.customerId=?;")) {

@@ -7,7 +7,13 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * 预订服务
+ */
 public class Reserve {
+    /**
+     * 预订大巴
+     */
     public static void reverseBus(Reservebus reservebus) {
         try (Connection conn = DBConnector.getConnection()) {
             conn.setAutoCommit(false);
@@ -31,6 +37,9 @@ public class Reserve {
         }
     }
 
+    /**
+     * 预订宾馆
+     */
     public static void reverseHotel(Reservehotel reservehotel) {
         try (Connection conn = DBConnector.getConnection()) {
             conn.setAutoCommit(false);
@@ -54,6 +63,9 @@ public class Reserve {
         }
     }
 
+    /**
+     * 预订航班
+     */
     public static void reverseFlight(Reserveflight reserveflight) {
         try (Connection conn = DBConnector.getConnection()) {
             conn.setAutoCommit(false);
@@ -82,6 +94,9 @@ public class Reserve {
         }
     }
 
+    /**
+     * 检查用户当前要订的航班与之前的航班是否有冲突
+     */
     private static boolean isLegal(Flights cur, List<Flights> flights) {
         for (Flights flight : flights) {
             if (cur.getFromTime().after(flight.getToTime()) || cur.getToTime().before(flight.getFromTime())) {

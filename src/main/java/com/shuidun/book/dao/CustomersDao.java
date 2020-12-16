@@ -11,6 +11,11 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class CustomersDao {
+
+
+    /**
+     * 添加一个用户
+     */
     public static boolean add(Connection conn, Customers customer) {
         int affectedRow = -1;
         try (PreparedStatement ps = conn.prepareStatement("insert into customers values (?,?);")) {
@@ -23,6 +28,9 @@ public class CustomersDao {
         return affectedRow > 0;
     }
 
+    /**
+     * 更新用户信息
+     */
     public static boolean update(Connection conn, Customers customer) {
         int affectedRow = -1;
         try (PreparedStatement ps = conn.prepareStatement("update customers set name=? where id=?;")) {

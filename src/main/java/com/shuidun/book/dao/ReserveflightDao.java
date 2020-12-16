@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReserveflightDao {
+    /**
+     * 预订航班
+     */
     public static boolean reverse(Connection conn, Reserveflight reserveflight) {
         int affectedRow = -1;
         try (PreparedStatement ps = conn.prepareStatement("insert into reserveflight values (?,?);")) {

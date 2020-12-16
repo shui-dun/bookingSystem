@@ -10,6 +10,9 @@ import org.junit.Test;
 import java.sql.Timestamp;
 import java.util.Scanner;
 
+/**
+ * 对service的单元测试
+ */
 public class TestService {
 
     @Test

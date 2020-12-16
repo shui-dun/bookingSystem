@@ -9,6 +9,10 @@ import java.util.Properties;
 
 public class DBConnector {
 
+    /**
+     * 创建数据库连接
+     * @return 数据库连接对象
+     */
     public static Connection getConnection() {
         Connection connection = null;
         try (InputStream in = DBConnector.class.getResourceAsStream("../../../../config.properties")) {

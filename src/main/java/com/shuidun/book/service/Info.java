@@ -7,8 +7,13 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.*;
 
+/**
+ * 从数据中获取信息
+ */
 public class Info {
-
+    /**
+     * 显示所有航班
+     */
     public static void showCities() {
         try (Connection conn = DBConnector.getConnection()) {
             List<City> cities = CityDao.findAll(conn);
@@ -20,6 +25,9 @@ public class Info {
         }
     }
 
+    /**
+     * 查看去往某城市的航班、大巴、宾馆信息
+     */
     public static void toCity(City travelTo) {
         try (Connection conn = DBConnector.getConnection()) {
             System.out.printf("开往%s的航班如下：\n", travelTo.getName());
@@ -50,6 +58,9 @@ public class Info {
         }
     }
 
+    /**
+     * 检查用户路线完整性
+     */
     public static void route(Customers customer) {
         System.out.println(customer);
         List<Flights> flights = null;
@@ -125,6 +136,9 @@ public class Info {
         return node;
     }
 
+    /**
+     * 用户旅游路线上的一个节点
+     */
     private static class TravelNode implements Comparable<TravelNode> {
         private String city;
         private Flights from;

@@ -7,6 +7,9 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class ReservehotelDao {
+    /**
+     * 预订宾馆
+     */
     public static boolean reverse(Connection conn, Reservehotel reservehotel) {
         int affectedRow = -1;
         try (PreparedStatement ps = conn.prepareStatement("insert into reservehotel values (?,?);")) {
