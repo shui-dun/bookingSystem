@@ -28,9 +28,14 @@ public class Reserve {
             }
             if (ReservebusDao.reverse(conn, reservebus)) {
                 bus.setSeatAvail(bus.getSeatAvail() - 1);
-                BusDao.update(conn, bus);
-                System.out.println("预订成功");
-                conn.commit();
+                if (BusDao.update(conn, bus)) {
+                    System.out.println("预订成功");
+                    conn.commit();
+                } else {
+                    System.out.println("预订失败");
+                    conn.rollback();
+                }
+
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -54,9 +59,13 @@ public class Reserve {
             }
             if (ReservehotelDao.reverse(conn, reservehotel)) {
                 hotel.setRoomAvail(hotel.getRoomAvail() - 1);
-                HotelsDao.update(conn, hotel);
-                System.out.println("预订成功");
-                conn.commit();
+                if (HotelsDao.update(conn, hotel)) {
+                    System.out.println("预订成功");
+                    conn.commit();
+                } else {
+                    System.out.println("预订失败");
+                    conn.rollback();
+                }
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -82,9 +91,13 @@ public class Reserve {
             if (isLegal(cur, flights)) {
                 if (ReserveflightDao.reverse(conn, reserveflight)) {
                     cur.setSeatAvail(cur.getSeatAvail() - 1);
-                    FlightsDao.update(conn, cur);
-                    System.out.println("预订成功");
-                    conn.commit();
+                    if (FlightsDao.update(conn, cur)) {
+                        System.out.println("预订成功");
+                        conn.commit();
+                    } else {
+                        System.out.println("预订失败");
+                        conn.rollback();
+                    }
                 }
             } else {
                 System.out.println("请检查是否与已有订单冲突");

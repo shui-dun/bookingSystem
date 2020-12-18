@@ -1,8 +1,5 @@
 package com.shuidun.book.dao;
 
-import com.shuidun.book.bean.Bus;
-import com.shuidun.book.bean.City;
-import com.shuidun.book.bean.Flights;
 import com.shuidun.book.bean.Hotels;
 import org.apache.commons.dbutils.BeanProcessor;
 
@@ -35,16 +32,18 @@ public class HotelsDao {
      * 更新宾馆信息
      */
     public static boolean update(Connection conn, Hotels hotel) {
+        int affectedRow = -1;
         try (PreparedStatement ps = conn.prepareStatement("update hotels set price=?,nRoom=?,roomAvail=? where location=?;")) {
             ps.setLong(1, hotel.getPrice());
             ps.setLong(2, hotel.getNRoom());
             ps.setLong(3, hotel.getRoomAvail());
             ps.setString(4, hotel.getLocation());
-            ps.executeUpdate();
+            affectedRow = ps.executeUpdate();
         } catch (SQLException throwables) {
             System.out.println("更新失败：" + throwables.getMessage());
+            return false;
         }
-        return true;
+        return affectedRow > 0;
     }
 
     /**

@@ -39,6 +39,7 @@ public class FlightsDao {
      * 更新航班信息
      */
     public static boolean update(Connection conn, Flights flight) {
+        int affectedRow = -1;
         try (PreparedStatement ps = conn.prepareStatement("update flights set price=?,nSeat=?,seatAvail=?,fromCity=?,toCity=?,fromTime=?,toTime=? where id=?;")) {
             ps.setLong(1, flight.getPrice());
             ps.setLong(2, flight.getNSeat());
@@ -48,11 +49,12 @@ public class FlightsDao {
             ps.setTimestamp(6, flight.getFromTime());
             ps.setTimestamp(7, flight.getToTime());
             ps.setString(8, flight.getId());
-            ps.executeUpdate();
+            affectedRow = ps.executeUpdate();
         } catch (SQLException throwables) {
             System.out.println("更新失败：" + throwables.getMessage());
+            return false;
         }
-        return true;
+        return affectedRow > 0;
     }
 
     /**
